@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="appModule">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li><a href="#/home">首页</a></li>
+    <li><a href="#/list">list</a></li>
+</ul>
+<div ng-view></div>
+</body>
+<script src="angular.js"></script>
+<script src="angular-route.js"></script>
+<script>
+    // app -> config -> run ->
+    var app = angular.module('appModule',['ngRoute']);
+    angular.module('appModule').run(function($templateCache){
+        $templateCache.put('home','<div>hellodiv</div>');
+        $templateCache.put('list','<div>hellodiv</div>');
+    });
+
+    app.config(function($routeProvider,$templateCache){
+        $routeProvider.when('/home',{
+            template:$templateCache.get('home'),
+            controller:'homeCtrl'
+        }).when('/list',{
+            template:$templateCache.get('list'),
+            controller:'ListCtrl'
+        });
+    });
+    app.controller('homeCtrl',function($scope){
+        $scope.name = 'home';
+    });
+    app.controller('ListCtrl',function($scope){
+        $scope.name = 'list';
+    });
+
+</script>
+</html>
